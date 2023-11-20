@@ -1,4 +1,4 @@
-const ItemCategory = require("../models/itemCategory");
+const ProductCategory = require("../models/productCategory");
 const { toTitleCase } = require("../utils/utils");
 
 const handleErrors = (err) => {
@@ -17,7 +17,7 @@ module.exports.createCategory = async (req, res) => {
   const { name } = req.body;
 
   try {
-    const newCategory = await ItemCategory.create({ name: toTitleCase(name) });
+    const newCategory = await ProductCategory.create({ name: toTitleCase(name) });
 
     res.status(201).json(newCategory);
   } catch (err) {
@@ -32,7 +32,7 @@ module.exports.updateCategory = async (req, res) => {
   const { name } = req.body;
 
   try {
-    const updatedCategory = await ItemCategory.findOneAndUpdate(
+    const updatedCategory = await ProductCategory.findOneAndUpdate(
       { _id: param },
       { name: toTitleCase(name) },
       { new: true }
@@ -61,7 +61,7 @@ module.exports.deleteCategory = async (req, res) => {
   const param = req.params.id;
 
   try {
-    const deletedCategory = await ItemCategory.findOneAndDelete({ _id: param });
+    const deletedCategory = await ProductCategory.findOneAndDelete({ _id: param });
 
     if (!deletedCategory) {
       return res.status(404).json({
@@ -72,7 +72,7 @@ module.exports.deleteCategory = async (req, res) => {
 
     res.status(204).json({
       status: "Deleted",
-      message: "ItemCategory deleted successfully",
+      message: "ProductCategory deleted successfully",
     });
   } catch (err) {
     const errors = handleErrors(err);
@@ -84,24 +84,21 @@ module.exports.deleteCategory = async (req, res) => {
 
 module.exports.getCategories = async (req, res) => {
   try {
-    const categories = await ItemCategory.find();
+    const categories = await ProductCategory.find();
 
     const responseObj = {
       categories: categories,
-      length: categories.length
+      length: categories.length,
     };
 
     res.status(200).json({
       status: "success",
-      data: responseObj
+      data: responseObj,
     });
-
   } catch (err) {
-
     const errors = handleErrors(err);
     res.status(400).json({
       errors,
     });
-    
   }
 };

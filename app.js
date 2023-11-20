@@ -13,8 +13,9 @@ app.use(cookieParser());
 
 const authRoutes = require("./routes/authRoutes");
 const usersRoutes = require("./routes/usersRoutes");
-const itemCategoryRoutes = require("./routes/itemCategoryRoutes");
-const itemRoutes = require("./routes/itemRoutes");
+const productCategoryRoutes = require("./routes/productCategoryRoutes");
+const productRoutes = require("./routes/productRoutes");
+const purchaseRoutes = require("./routes/purchaseRoutes");
 
 // database connection
 const dbURI = `mongodb+srv://mongodb:${dbPassword}@cluster0.dko2ncp.mongodb.net/meatshelf?retryWrites=true&w=majority`;
@@ -31,5 +32,6 @@ mongoose
 app.get("*", checkUser);
 app.use("/auth", authRoutes);
 app.use("/users", requireAuth, usersRoutes);
-app.use("/itemCategory", requireAuth, itemCategoryRoutes)
-app.use("/item", requireAuth, itemRoutes);
+app.use("/productCategory", requireAuth, productCategoryRoutes);
+app.use("/product", requireAuth, productRoutes);
+app.use("/purchase", requireAuth, purchaseRoutes);
